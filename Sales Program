@@ -1,0 +1,44 @@
+item_list=["Laptop","Headset","Second Monitor","Mousepad","USB Drive"]
+limit =5000
+
+price_sheet={'Laptop':1500,
+             'Headset':100,
+             'Second Monitor':200,
+             'Mousepad':50,
+             'USB Drive':70}
+
+cart =[]
+def add_to_cart(item,quantity):
+  cart.append((item,quantity))
+  item_list.remove(item)
+
+def create_invoice():
+  total_amount_inc_tax=0
+  for item,quantity in cart:
+    price = price_sheet[item]
+    tax=0.18*price
+    total=(tax+price)*quantity
+    total_amount_inc_tax +=total
+    print(" ITEM: ",item, "\n","PRICE: ",price, "\n","QUANTITY: ",quantity,"\n","TAX: ",tax, "\n", "TOTAL: ",total,"\n","\n")
+    print("After the taxes are applied the total amount is: ",total_amount_inc_tax ,"\n")
+  return total_amount_inc_tax
+
+def checkout():
+  global limit
+  total_amount = create_invoice()
+
+  if limit==0:
+    print("You do not have any badget!")
+  elif total_amount>limit:
+    print("The amount you have to pay is above the spending limit. You have to drop some items!")
+  else:
+    limit-=total_amount
+    print(f"The total amount(incl. taxes) you've paid is {total_amount}. You have {limit} dollars left.")
+
+add_to_cart("Laptop",1)
+add_to_cart("Headset",8)
+add_to_cart("Second Monitor",1)
+add_to_cart("Mousepad",1)
+add_to_cart("USB Drive",2)
+
+checkout()
